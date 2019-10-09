@@ -43,6 +43,36 @@ namespace WebAddressbookTests
             app.Contacts.Create(contact);
 
             }
-        
-       }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = new ContactData("", "");
+            contact.Middlename = "";
+            contact.Nickname = "";
+            contact.Title = "";
+            contact.Company = "";
+            contact.Address = "";
+            contact.Home = "";
+            contact.Mobile = "";
+            contact.Email = "";
+            contact.Work = "";
+            contact.Fax = "";
+            contact.Email2 = "";
+            contact.Email3 = "";
+            contact.Homepage = "";
+            contact.Bday = "";
+            contact.Bmonth = "";
+            contact.Byear = "";
+            contact.Aday = "";
+            contact.Amonth = "";
+            contact.Ayear = "";
+            contact.Address2 = "";
+            contact.Phone2 = "";
+            contact.Notes = "";
+
+            app.Contacts.Create(contact);
+
+        }
+    }
 }
