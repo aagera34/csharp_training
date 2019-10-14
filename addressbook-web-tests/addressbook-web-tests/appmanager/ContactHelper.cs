@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -12,7 +13,9 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
-        public bool acceptNextAlert { get; private set; }
+        private string baseURL;
+
+        public bool AcceptNextAlert { get; private set; }
 
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
@@ -21,7 +24,8 @@ namespace WebAddressbookTests
         public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.GoToContactPage();
-            InitContactCreation();
+
+            GoToNewContactPage();
             FillContactForm(contact);
             SubmitContactCreation();
             ReturnToContactPage();
@@ -31,53 +35,64 @@ namespace WebAddressbookTests
         public ContactHelper Modify(int v, ContactData newData)
         {
             manager.Navigator.GoToContactPage();
-            SelectContact(v);
+
+            GoToNewContactPage();
+            SelectContact(1);
             InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
             ReturnToContactPage();
             return this;
         }
-        public ContactHelper Remove(int v)
+        public ContactHelper Remove(int h)
         {
             manager.Navigator.GoToContactPage();
-            SelectContact(v);
+
+            InitContactModification();
+            SelectContact(h);
             RemoveContact();
+            CloseAlertAndGetItsText();
             ReturnToContactPage();
             return this;
         }
 
+        public void GoToContactPage()
+        {
+            driver.Navigate().GoToUrl(baseURL + "/addressbook");
+        }
         public ContactHelper RemoveContact()
         {
+            AcceptNextAlert = true;
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
 
             return this;
         }
 
-        public ContactHelper SubmitContactModification()
-        {
-            driver.FindElement(By.Name("submit")).Click();
-            return this;
-        }
+        
 
         public ContactHelper InitContactModification()
         {
-            driver.FindElement(By.Name("edit")).Click();
+
+            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.Name("selected[]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
-
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+            return this;
+        }
         public ContactHelper GoToNewContactPage()
         {
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
-
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.Name("home")).Click();
@@ -89,14 +104,38 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("submit")).Click();
             return this;
         }
-
-        private string CloseAlertAndGetItsText()
+        public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+    
+        public bool IsAlertPresent()
+        {
+            try
+            {
+                driver.SwitchTo().Alert();
+                return true;
+            }
+            catch (NoAlertPresentException)
+            {
+                return false;
+            }
+        }
+        public string CloseAlertAndGetItsText()
         {
             try
             {
                 IAlert alert = driver.SwitchTo().Alert();
                 string alertText = alert.Text;
-                if (acceptNextAlert)
+                if (AcceptNextAlert)
                 {
                     alert.Accept();
                 }
@@ -108,12 +147,13 @@ namespace WebAddressbookTests
             }
             finally
             {
-                acceptNextAlert = true;
+                AcceptNextAlert = true;
             }
-        }
+                   }
+
         public ContactHelper ReturnToContactPage()
         {
-            driver.FindElement(By.LinkText("home")).Click();
+            driver.FindElement(By.LinkText("home page")).Click();
             return this;
         }
         public ContactHelper FillContactForm(ContactData contact)

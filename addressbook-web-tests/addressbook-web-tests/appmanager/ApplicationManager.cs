@@ -13,17 +13,17 @@ namespace WebAddressbookTests
     {
         protected IWebDriver driver;
         protected string baseURL;
+        protected bool acceptNextAlert = true;
 
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-
-
+      
         public ApplicationManager()
         {
          driver = new FirefoxDriver();
-         baseURL = "http://localhost:8098/addressbook";
+         baseURL = "http://localhost:8098";
 
          loginHelper = new LoginHelper(this);
          navigator = new NavigationHelper(this, baseURL);
