@@ -14,6 +14,7 @@ namespace WebAddressbookTests
     {
         
         public string baseURL;
+        public bool acceptNextAlert = true;
 
 
         public NavigationHelper(ApplicationManager manager, string baseURL) : base(manager)
@@ -44,8 +45,8 @@ namespace WebAddressbookTests
         }
         public void ReturnToContactPage()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("home")).Click();
         }
 
-    }
+       }
 }
