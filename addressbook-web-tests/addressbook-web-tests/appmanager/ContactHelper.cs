@@ -51,7 +51,13 @@ namespace WebAddressbookTests
             acceptNextAlert = true;
             RemoveContact();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
-            ReturnToContactPage();
+            ReturnToContactsPage();
+            return this;
+        }
+
+        public ContactHelper ReturnToContactsPage()
+        {
+            driver.FindElement(By.LinkText("home")).Click();
             return this;
         }
 
