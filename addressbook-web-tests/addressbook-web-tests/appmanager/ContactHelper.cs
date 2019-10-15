@@ -45,12 +45,14 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(int h)
         {
-            manager.Navigator.GoToContactPage();
+            manager.Navigator.GoToHomePage();
 
             SelectContact(1);
             acceptNextAlert = true;
             RemoveContact();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            driver.FindElement(By.CssSelector("div.msgbox"));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
             ReturnToContactsPage();
             return this;
         }
@@ -75,6 +77,7 @@ namespace WebAddressbookTests
         {
 
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+           
             return this;
         }
 
@@ -104,7 +107,10 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("submit")).Click();
             return this;
         }
-
+        private void chooseOkOnNextConfirmation()
+        {
+            throw new NotImplementedException();
+        }
 
         public ContactHelper ReturnToContactPage()
         {

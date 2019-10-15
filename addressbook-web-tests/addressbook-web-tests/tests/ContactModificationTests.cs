@@ -39,7 +39,7 @@ namespace WebAddressbookTests
             newData.Phone2 = "545456456456";
             newData.Notes = "5656456";
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(2, newData);
         }
     }
 }
