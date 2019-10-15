@@ -32,7 +32,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newData)
+        public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToContactPage();
 
@@ -43,7 +43,7 @@ namespace WebAddressbookTests
             ReturnToContactPage();
             return this;
         }
-        public ContactHelper Remove(int h)
+        public ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
 
