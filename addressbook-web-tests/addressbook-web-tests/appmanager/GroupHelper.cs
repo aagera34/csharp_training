@@ -116,17 +116,21 @@ namespace WebAddressbookTests
                 return;
             }
 
-            CreateGroup(newgroup1);
+            CreatesGroup();
 
         }
 
-        private void CreateGroup(GroupData groupData, object newgroup1)
+        private void CreatesGroup()
         {
             InitGroupCreation();
-            FillGroupForm(new GroupData("kkk"));
+            FillGroupForm(group);
             SubmitGroupCreation();
-
+            ReturnToGroupsPage();
+            return;
+            throw new NotImplementedException();
         }
+
+       
     }
 }       
     
