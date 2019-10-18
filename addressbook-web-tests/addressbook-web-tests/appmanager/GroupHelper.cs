@@ -126,8 +126,7 @@ namespace WebAddressbookTests
             FillGroupForm(group);
             SubmitGroupCreation();
             ReturnToGroupsPage();
-            return;
-            throw new NotImplementedException();
+                      
         }
 
        
