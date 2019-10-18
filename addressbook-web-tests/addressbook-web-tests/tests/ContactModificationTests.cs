@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
 
@@ -16,28 +16,28 @@ namespace WebAddressbookTests
 
         {
             ContactData newData = new ContactData("zzz", "rrrr");
-            newData.Middlename = "lsl";
-            newData.Nickname = "alsl";
-            newData.Title = "sdf";
-            newData.Company = "sfds";
-            newData.Address = "sdfdsa";
-            newData.Home = "aaa";
-            newData.Mobile = "ret";
-            newData.Email = "buo@com";
-            newData.Work = "sfd16456";
-            newData.Fax = "5656456454";
-            newData.Email2 = "buo1@com";
-            newData.Email3 = "buo2@com";
-            newData.Homepage = "78978978";
-            newData.Bday = "";
-            newData.Bmonth = "";
-            newData.Byear = "2000";
-            newData.Aday = "";
-            newData.Amonth = "";
-            newData.Ayear = "2012";
-            newData.Address2 = "hgfghgfh";
-            newData.Phone2 = "545456456456";
-            newData.Notes = "5656456";
+            newData.Middlename = null;
+            newData.Nickname = null;
+            newData.Title = null;
+            newData.Company = null;
+            newData.Address = null;
+            newData.Home = null;
+            newData.Mobile = null;
+            newData.Email = null;
+            newData.Work = null;
+            newData.Fax = null;
+            newData.Email2 = null;
+            newData.Email3 = null;
+            newData.Homepage = null;
+            newData.Bday = null;
+            newData.Bmonth = null;
+            newData.Byear = null;
+            newData.Aday = null;
+            newData.Amonth = null;
+            newData.Ayear = null;
+            newData.Address2 = null;
+            newData.Phone2 = null;
+            newData.Notes = null;
 
             app.Contacts.Modify(newData);
         }
