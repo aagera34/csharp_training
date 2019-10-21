@@ -33,7 +33,9 @@ namespace WebAddressbookTests
         private string phone2 = "";
         private string notes = "";
 
-
+        public ContactData(ContactData newData)
+        {
+        }
 
         public ContactData(string firstname, string lastname)
         {

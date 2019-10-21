@@ -36,6 +36,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactPage();
 
+            IsModifyContact();
             SelectContact(1);
             InitContactModification();
             FillContactForm(newData);
@@ -43,6 +44,9 @@ namespace WebAddressbookTests
             ReturnToContactPage();
             return this;
         }
+
+       
+      
         public ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
@@ -193,5 +197,18 @@ namespace WebAddressbookTests
                 acceptNextAlert = true;
             }
         }
+        private void IsModifyContact()
+        {
+            {
+                if (IsElementPresent(By.ClassName("center")))
+                {
+                    return;
+                }
+                ContactData newData = new ContactData("hghh", "hhr");
+                Create(new ContactData(newData));
+
+            }
+        }
+
     }
 }
