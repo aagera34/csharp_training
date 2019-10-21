@@ -36,7 +36,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
 
             GoToNewGroupsPage();
-            IsModifyGroup();
+            InitGroupSearch();
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -50,7 +50,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             GoToNewGroupsPage();
-            InitGroupRemove();
+            InitGroupSearch();
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupsPage();
@@ -112,17 +112,8 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public void IsModifyGroup()
-        {
-            if (IsElementPresent(By.ClassName("group")))
-            {
-                return;
-            }
-            //GroupData gd = new GroupData("group");
-            Create(new GroupData("group"));
-
-        }
-        public void InitGroupRemove()
+        
+        public void InitGroupSearch()
         {
             if (IsElementPresent(By.ClassName("group")))
             {
