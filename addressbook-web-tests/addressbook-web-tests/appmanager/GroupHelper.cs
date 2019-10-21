@@ -36,7 +36,6 @@ namespace WebAddressbookTests
             manager.Navigator.GoToGroupsPage();
 
             GoToNewGroupsPage();
-            InitGroupSearch();
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -50,7 +49,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
             GoToNewGroupsPage();
-            InitGroupSearch();
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupsPage();

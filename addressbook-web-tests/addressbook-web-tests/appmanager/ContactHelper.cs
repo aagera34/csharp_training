@@ -36,7 +36,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactPage();
 
-            InitContactSearch();
             SelectContact(1);
             InitContactModification();
             FillContactForm(newData);
@@ -51,7 +50,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
 
-            InitContactSearch(); 
             SelectContact(1);
             acceptNextAlert = true;
             RemoveContact();
