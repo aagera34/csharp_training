@@ -51,6 +51,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
 
+            InitContactRemove();
             SelectContact(1);
             acceptNextAlert = true;
             RemoveContact();
@@ -60,6 +61,8 @@ namespace WebAddressbookTests
             ReturnToContactsPage();
             return this;
         }
+
+        
 
         public ContactHelper ReturnToContactsPage()
         {
@@ -197,7 +200,7 @@ namespace WebAddressbookTests
                 acceptNextAlert = true;
             }
         }
-        private void IsModifyContact()
+        public void IsModifyContact()
         {
             {
                 if (IsElementPresent(By.ClassName("center")))
@@ -209,6 +212,15 @@ namespace WebAddressbookTests
 
             }
         }
+        private void InitContactRemove()
+        {
+            if (IsElementPresent(By.ClassName("center")))
+                {
+                    return;
+                }
+                ContactData newData = new ContactData("hghh", "hhr");
+                Create(new ContactData(newData));
 
+        }
     }
 }
