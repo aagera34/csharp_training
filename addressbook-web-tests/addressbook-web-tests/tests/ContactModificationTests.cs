@@ -40,8 +40,17 @@ namespace WebAddressbookTests
             newData.Phone2 = null;
             newData.Notes = null;
 
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
             app.Contacts.InitContactSearch();
-            app.Contacts.Modify(newData);
+            app.Contacts.Modify(0, newData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Firstname = newData.Firstname;
+            oldContacts[0].Lastname = newData.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

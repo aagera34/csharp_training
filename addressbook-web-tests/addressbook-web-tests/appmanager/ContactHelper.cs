@@ -9,6 +9,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
+
+
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
@@ -16,6 +18,7 @@ namespace WebAddressbookTests
         public bool acceptNextAlert { get; private set; }
 
         private string baseURL;
+        public object newcontact1;
 
         public ContactHelper(ApplicationManager manager) : base(manager)
         {
@@ -32,11 +35,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(ContactData newData)
+        public ContactHelper Modify(int v, ContactData newData)
         {
             manager.Navigator.GoToContactPage();
 
-            SelectContact(1);
+            SelectContact(v);
             InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
@@ -46,11 +49,11 @@ namespace WebAddressbookTests
 
        
       
-        public ContactHelper Remove()
+        public ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
 
-            SelectContact(1);
+            SelectContact(v);
             acceptNextAlert = true;
             RemoveContact();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
@@ -88,7 +91,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
         public ContactHelper SubmitContactModification()
@@ -208,6 +211,27 @@ namespace WebAddressbookTests
                 ContactData newData = new ContactData("hghh", "hhr");
                 Create(new ContactData(newData));
 
+        }
+
+        public List<ContactData> GetContactList()
+        {
+
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.GoToContactPage();
+           
+
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[Name=entry]"));
+            foreach (IWebElement element in elements)
+            {
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                ContactData contact = new ContactData(cells[1].Text, cells[2].Text);
+                //contacts.Add(new ContactData(element.Text, element.Text));
+
+            }
+
+            return contacts;
+           
         }
     }
 }
