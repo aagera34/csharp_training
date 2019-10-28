@@ -35,11 +35,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newData)
+        public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToContactPage();
 
-            SelectContact(v);
+            SelectContact(0);
             InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
@@ -53,7 +53,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
 
-            SelectContact(v);
+            SelectContact(0);
             acceptNextAlert = true;
             RemoveContact();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
@@ -201,7 +201,20 @@ namespace WebAddressbookTests
                 acceptNextAlert = true;
             }
         }
-        
+
+        private bool newIsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
         public void InitContactSearch()
         {
             if (IsElementPresent(By.ClassName("center")))
@@ -225,13 +238,14 @@ namespace WebAddressbookTests
             foreach (IWebElement element in elements)
             {
                 IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                ContactData contact = new ContactData(cells[1].Text, cells[2].Text);
-                //contacts.Add(new ContactData(element.Text, element.Text));
+                //ContactData contact = new ContactData(cells[1].Text, cells[2].Text);
+                contacts.Add(new ContactData(cells[1].Text, cells[2].Text));
 
             }
 
             return contacts;
            
         }
+       
     }
 }

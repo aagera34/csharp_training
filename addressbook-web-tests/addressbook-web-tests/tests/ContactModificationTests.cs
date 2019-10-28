@@ -41,8 +41,9 @@ namespace WebAddressbookTests
             newData.Notes = null;
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.InitContactSearch();
-            app.Contacts.Modify(0, newData);
+            app.Contacts.Modify(newData);
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts[0].Firstname = newData.Firstname;

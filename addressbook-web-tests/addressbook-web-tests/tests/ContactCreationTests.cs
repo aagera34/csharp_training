@@ -16,28 +16,28 @@ namespace WebAddressbookTests
         {
             
            ContactData contact = new ContactData("aaaa", "ddd");
-            contact.Middlename = "lll";
-            contact.Nickname = "ddd";
-            contact.Title = "ff";
-            contact.Company = "OOO fgf";
-            contact.Address = "strit Staschki";
-            contact.Home = "863555963";
-            contact.Mobile = "89000000000";
-            contact.Email = "test@test.com";
-            contact.Work = "sd";
-            contact.Fax = "sda44444";
-            contact.Email2 = "adsdf@test.com";
-            contact.Email3 = "adsdf22@test.com";
-            contact.Homepage = "asd";
+            contact.Middlename = "djdjd";
+            contact.Nickname = "dsjf";
+            contact.Title = "sdf";
+            contact.Company = "sadfasd";
+            contact.Address = "strit";
+            contact.Home = "dsjfkldsaf";
+            contact.Mobile = "dsa89787";
+            contact.Email = "sadfdsaf@com.ru";
+            contact.Work = "asdf";
+            contact.Fax = "adf";
+            contact.Email2 = "sadf@com.ru";
+            contact.Email3 = "test@com.ru";
+            contact.Homepage = "";
             contact.Bday = "";
             contact.Bmonth = "";
-            contact.Byear = "1990";
+            contact.Byear = "";
             contact.Aday = "";
             contact.Amonth = "";
-            contact.Ayear = "2012";
-            contact.Address2 = "sadsad";
-            contact.Phone2 = "79005000000";
-            contact.Notes = "adssd";
+            contact.Ayear = "";
+            contact.Address2 = "";
+            contact.Phone2 = "";
+            contact.Notes = "";
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 

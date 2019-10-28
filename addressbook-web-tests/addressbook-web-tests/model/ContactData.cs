@@ -32,13 +32,13 @@ namespace WebAddressbookTests
         private string address2 = "";
         private string phone2 = "";
         private string notes = "";
-        private string text;
+        
 
         public ContactData(ContactData newData)
         {
         }
 
-        public ContactData(string firstname, string lastname)
+        public ContactData(string lastname, string firstname)
         {
             this.firstname = firstname;
             this.lastname = lastname;
@@ -61,7 +61,7 @@ namespace WebAddressbookTests
 
         public override int GetHashCode()
         {
-            return Firstname.GetHashCode() + Lastname.GetHashCode();
+            return (Firstname + Lastname).GetHashCode();
         }
 
         public override string ToString()
@@ -75,17 +75,17 @@ namespace WebAddressbookTests
             {
                 return 1;
             }
-            if (Lastname.CompareTo(other.Lastname) != 0)
-            {
-                return Lastname.CompareTo(other.Lastname);
-            }
-            else
+            int compareResulL = Lastname.CompareTo(other.Lastname);
+
+            if (compareResulL==0)
             {
                 return Firstname.CompareTo(other.Firstname);
             }
+            else
+            {
+                return compareResulL;
+            }
         }
-
-
 
 
         public string Firstname
