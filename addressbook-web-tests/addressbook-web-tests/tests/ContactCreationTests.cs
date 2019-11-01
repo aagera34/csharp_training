@@ -21,10 +21,10 @@ namespace WebAddressbookTests
             contact.Title = "sdf";
             contact.Company = "sadfasd";
             contact.Address = "strit";
-            contact.Home = "dsjfkldsaf";
-            contact.Mobile = "dsa89787";
+            contact.HomePhone = "dsjfkldsaf";
+            contact.MobilePhone = "dsa89787";
             contact.Email = "sadfdsaf@com.ru";
-            contact.Work = "asdf";
+            contact.WorkPhone = "asdf";
             contact.Fax = "adf";
             contact.Email2 = "sadf@com.ru";
             contact.Email3 = "test@com.ru";
@@ -61,10 +61,10 @@ namespace WebAddressbookTests
             contact.Title = "";
             contact.Company = "";
             contact.Address = "";
-            contact.Home = "";
-            contact.Mobile = "";
+            contact.HomePhone = "";
+            contact.MobilePhone = "";
             contact.Email = "";
-            contact.Work = "";
+            contact.WorkPhone = "";
             contact.Fax = "";
             contact.Email2 = "";
             contact.Email3 = "";

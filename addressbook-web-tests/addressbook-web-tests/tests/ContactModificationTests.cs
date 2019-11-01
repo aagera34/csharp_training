@@ -22,10 +22,10 @@ namespace WebAddressbookTests
             newData.Title = null;
             newData.Company = null;
             newData.Address = null;
-            newData.Home = null;
-            newData.Mobile = null;
+            newData.HomePhone = null;
+            newData.MobilePhone = null;
             newData.Email = null;
-            newData.Work = null;
+            newData.WorkPhone = null;
             newData.Fax = null;
             newData.Email2 = null;
             newData.Email3 = null;
