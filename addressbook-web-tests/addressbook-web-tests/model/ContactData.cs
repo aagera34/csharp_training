@@ -11,7 +11,6 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
-        private string allDetails;
         private string allDetailsForm;
 
         public ContactData(ContactData newData)
@@ -22,6 +21,10 @@ namespace WebAddressbookTests
         {
             Firstname = firstname;
             Lastname = lastname;
+        }
+
+        public ContactData(string v)
+        {
         }
 
         public string Firstname { get; set; }
@@ -199,10 +202,17 @@ namespace WebAddressbookTests
             return (Firstname + Lastname).GetHashCode();
         }
 
+        //public override string ToString()
+        //{
+        //    return (Firstname + Lastname);
+        //}
         public override string ToString()
         {
-            return (Firstname + Lastname);
+            return ("firstname=" + Firstname + "\nlactname=" + Lastname + "\naddress" + Address);
         }
+
+
+
 
         public int CompareTo(ContactData other)
         {

@@ -30,11 +30,16 @@ namespace WebAddressbookTests
         {
             return Name.GetHashCode();
         }
-        
+
         public override string ToString()
         {
-            return "name=" + Name;
+            return "name=" + Name + "\nheader =" + Header + "\nfooter=" + Footer;
         }
+
+        //public override string ToString()
+        //{
+        //    return "name=" + Name;
+        //}
 
         public int CompareTo(GroupData other)
         {
