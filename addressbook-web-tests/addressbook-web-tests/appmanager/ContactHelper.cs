@@ -16,8 +16,7 @@ namespace WebAddressbookTests
     public class ContactHelper : HelperBase
     {
         public bool acceptNextAlert { get; private set; }
-
-
+        public string Details { get; private set; }
 
         private string baseURL;
         public object newcontact1;
@@ -263,16 +262,15 @@ namespace WebAddressbookTests
             string address = cells[3].Text;
             string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
-           
 
-         return new ContactData(lastName, fistName)
+
+            return new ContactData(lastName, fistName)
             {
-            Address = address,
-            AllPhones = allPhones,
-            AllEmails = allEmails,
-            
-           };
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails,
 
+            };
 
         }
 
@@ -291,6 +289,8 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
+            
+
             return new ContactData(lastName, firstName)
             {
                 Address = address,
@@ -301,6 +301,70 @@ namespace WebAddressbookTests
                 Email2 = email2,
                 Email3 = email3
             };
+        }
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToContactPage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
+        public string GetContactInformatoinFormDetail()
+        {
+            manager.Navigator.GoToContactPage();
+            InitContactDetails();
+
+            string text = driver.FindElement(By.CssSelector("div#content")).Text;
+            
+            
+            return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","").Replace("M:","").Replace("H:","").Replace("W:","");
+
+        }
+
+        public string GetContactInformatoinFormEditForm1(int index)
+        {
+            manager.Navigator.GoToContactPage();
+            InitContactModification(0);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+
+
+            var mpg = new ContactData (lastName, firstName)
+            {
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
+            };
+
+            return (string) mpg.AllDetailsForm;
+        }
+
+        public ContactHelper InitContactDetails()
+        {
+        //driver.FindElements(By.Name("entry"))[index]
+        //    .FindElements(By.TagName("td"))[6]
+        //    .FindElement(By.TagName("a")).Click();
+
+        driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
+
+        return this;
+        }
+
     }
 }
-    }
+    
+

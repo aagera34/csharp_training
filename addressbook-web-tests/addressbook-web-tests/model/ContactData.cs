@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -10,6 +11,8 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetails;
+        private string allDetailsForm;
 
         public ContactData(ContactData newData)
         {
@@ -60,7 +63,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]","") + "\r\n";
         }
 
         public string AllEmails 
@@ -86,7 +89,63 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return email.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(email, "[ -()]", "") + "\r\n"; 
+        }
+
+        //public string AllDetails
+        //{
+        //    get
+        //    {
+        //        if (allDetails != null)
+        //        {
+        //            return allDetails;
+        //        }
+        //        else
+        //        {
+        //            return (CleanDetailUp(Firstname) + CleanDetailUp(Lastname)).Trim() + (Address + AllEmails + AllPhones).Trim();
+        //        }
+        //    }
+        //    set
+        //    {
+        //        allDetails = value;
+        //    }
+        //}
+
+        //private string CleanDetailUp(string details)
+        //{
+        //    if (details == null || details == "")
+        //    {
+        //        return "";
+        //    }
+        //    return Regex.Replace(details, "[ -()]", "") + "\r\n";
+        //}
+
+        public string AllDetailsForm
+        {
+            get
+            {
+                if (allDetailsForm != null)
+                {
+                    return allDetailsForm;
+                }
+                else
+                {
+                    return (CleanDetailFormUp(Firstname) + CleanDetailFormUp(Lastname) + CleanDetailFormUp(Address) + CleanDetailFormUp(AllPhones) + CleanDetailFormUp(AllEmails)).Trim();
+                }
+            }
+            set
+            {
+                allDetailsForm = value;
+            }
+        }
+
+        private string CleanDetailFormUp(string detailsform)
+        {
+            if (detailsform == null || detailsform == "")
+            {
+                return "";
+            }
+            return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
         }
 
 
