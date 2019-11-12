@@ -15,11 +15,11 @@ namespace WebAddressbookTests
         public void ContactDetailsTest()
         {
             
-            string formForm = app.Contacts.GetContactInformatoinFormEditForm1(0);
+            string formForm1 = app.Contacts.GetContactInformatoinFormEditForm1(0);
             string formDetails = app.Contacts.GetContactInformatoinFormDetail();
 
             // verification
-            Assert.AreEqual(formForm, formDetails);
+            Assert.AreEqual(formForm1, formDetails);
            
 
 

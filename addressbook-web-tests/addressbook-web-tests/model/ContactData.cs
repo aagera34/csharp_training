@@ -23,16 +23,16 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
-        public ContactData(string v)
-        {
-        }
+        //public ContactData(string v)
+        //{
+        //}
 
         public string Firstname { get; set; }
 
         public string Lastname { get; set; }
 
         public string Middlename { get; set; }
-
+       
         public string Nickname { get; set; }
 
         public string Title { get; set; }
@@ -133,7 +133,8 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanDetailFormUp(Firstname) + CleanDetailFormUp(Lastname) + CleanDetailFormUp(Address) + CleanDetailFormUp(AllPhones) + CleanDetailFormUp(AllEmails)).Trim();
+                    return (CleanDetailFormUp(Firstname) + CleanDetailFormUp(Middlename) + CleanDetailFormUp(Lastname) + CleanDetailFormUp(Nickname) + CleanDetailFormUp(Title) + CleanDetailFormUp(Company) + CleanDetailFormUp(Address) + CleanDetailFormUp(AllPhones) 
+                        + CleanDetailFormUp(Fax) + CleanDetailFormUp(AllEmails) + CleanDetailFormUp(Homepage) + CleanDetailFormUp(Address2) + CleanDetailFormUp(Phone2) + CleanDetailFormUp(Notes)).Trim();
                 }
             }
             set
@@ -148,6 +149,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
+            //return detailsform;
             return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
         }
 
@@ -208,7 +210,9 @@ namespace WebAddressbookTests
         //}
         public override string ToString()
         {
-            return ("firstname=" + Firstname + "\nlactname=" + Lastname + "\naddress" + Address);
+            return ("firstname=" + Firstname + "\nlactname=" + Lastname + "\nmiddlename=" + Middlename + "\ncompany=" + Company + 
+                "\naddress" + Address + "\nhomePhone" + HomePhone + "\nmobilePhone" + MobilePhone + "\nemail" + Email + "\nworkPhone" 
+                + WorkPhone + "\nfax" + Fax + "\nemail2" + Email2 + "\nemail3" + Email3);
         }
 
 

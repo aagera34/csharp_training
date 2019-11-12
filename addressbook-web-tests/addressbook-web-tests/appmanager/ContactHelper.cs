@@ -318,7 +318,8 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.CssSelector("div#content")).Text;
             
             
-            return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","").Replace("M:","").Replace("H:","").Replace("W:","");
+            return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","")
+                .Replace("M:","").Replace("H:","").Replace("W:","").Replace("F:", "").Replace("Homepage:", "").Replace("P:", "");
 
         }
 
@@ -327,27 +328,48 @@ namespace WebAddressbookTests
             manager.Navigator.GoToContactPage();
             InitContactModification(0);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
 
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
-
-
+            string homepage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string address2 = driver.FindElement(By.Name("address2")).GetAttribute("value");
+            string Phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
+            string Notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
 
             var mpg = new ContactData (lastName, firstName)
             {
+                Firstname = firstName,
+                Middlename = middleName,
+                Lastname = lastName,
+
+                Nickname = nickName,
+                Title = title,
+                Company = company,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
+                Fax = fax,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                Homepage = homepage,
+                Address2 = address2,
+                Phone2 = Phone2,
+                Notes = Notes
+
             };
 
             return (string) mpg.AllDetailsForm;
