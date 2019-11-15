@@ -23,10 +23,7 @@ namespace WebAddressbookTests
             Lastname = lastname;
         }
 
-        //public ContactData(string v)
-        //{
-        //}
-
+        
         public string Firstname { get; set; }
 
         public string Lastname { get; set; }
@@ -133,8 +130,11 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanDetailFormUp(Firstname) + CleanDetailFormUp(Middlename) + CleanDetailFormUp(Lastname) + CleanDetailFormUp(Nickname) + CleanDetailFormUp(Title) + CleanDetailFormUp(Company) + CleanDetailFormUp(Address) + CleanDetailFormUp(AllPhones) 
-                        + CleanDetailFormUp(Fax) + CleanDetailFormUp(AllEmails) + CleanDetailFormUp(Homepage) + CleanDetailFormUp(Address2) + CleanDetailFormUp(Phone2) + CleanDetailFormUp(Notes)).Trim();
+                    return CleanDetailFormUp(Firstname).Trim() + " " + (CleanDetailFormUp(Middlename)+"\r\n" + CleanDetailFormUp(Lastname) + CleanDetailFormUp(Nickname) + "\r\n" 
+                        + CleanDetailFormUp(Title)+ "\r\n" + CleanDetailFormUp(Company)+ "\r\n" + CleanDetailFormUp(Address)+ "\r\n" + "\r\nH:"+ " "+ CleanDetailFormUp(HomePhone) 
+                        + "\r\nM:" + " " + CleanDetailFormUp((MobilePhone)+ "\r\nW:" + " " + CleanDetailFormUp(WorkPhone) + "\r\nF:" + " " + CleanDetailFormUp(Fax) + "\r\n" + "\r\n" + CleanDetailFormUp(Email) 
+                        + "\r\n" + CleanDetailFormUp(Email2) + "\r\n" + CleanDetailFormUp(Email3) + "\r\nHomepage:\r\n" + CleanDetailFormUp(Homepage) + "\r\n\r\n\r\n" 
+                        + CleanDetailFormUp(Address2) + "\r\n" + "\r\nP:" + " " + CleanDetailFormUp(Phone2) + "\r\n" + "\r\n" + CleanDetailFormUp(Notes))).Trim();
                 }
             }
             set
@@ -149,8 +149,10 @@ namespace WebAddressbookTests
             {
                 return "";
             }
+
+            return detailsform.Replace("-", ""); 
             //return detailsform;
-            return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
+            //return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
         }
 
 

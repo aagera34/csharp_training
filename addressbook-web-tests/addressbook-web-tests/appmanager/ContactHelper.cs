@@ -316,10 +316,10 @@ namespace WebAddressbookTests
             InitContactDetails();
 
             string text = driver.FindElement(By.CssSelector("div#content")).Text;
-            
-            
-            return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","")
-                .Replace("M:","").Replace("H:","").Replace("W:","").Replace("F:", "").Replace("Homepage:", "").Replace("P:", "");
+
+            return text;
+            //return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","")
+            //    .Replace("M:","").Replace("H:","").Replace("W:","").Replace("F:", "").Replace("Homepage:", "").Replace("P:", "");
 
         }
 
