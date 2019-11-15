@@ -31,14 +31,14 @@ namespace WebAddressbookTests
                     Fax = GenerateRandomString(100),
                     Email2 = GenerateRandomString(100),
                     Email3 = GenerateRandomString(100),
-                 
+
                 });
             }
-            
-            return contacts;
-         }
 
-        public static IEnumerable<ContactData> ContactDataFormCsvFile()
+            return contacts;
+        }
+
+        public static IEnumerable<ContactData> ContactDataFormFile()
         {
             List<ContactData> contacts = new List<ContactData>();
             string[] lines = File.ReadAllLines(@"contact.csv");
@@ -47,42 +47,31 @@ namespace WebAddressbookTests
                 string[] parts = l.Split(',');
                 contacts.Add(new ContactData(parts[0], parts[1])
                 {
-
-                });
-
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
-                {
-                    Lastname = GenerateRandomString(100),
-                    Firstname = GenerateRandomString(100),
-                    Middlename = GenerateRandomString(100),
-                    Company = GenerateRandomString(100),
-                    Address = GenerateRandomString(100),
-                    HomePhone = GenerateRandomString(100),
-                    MobilePhone = GenerateRandomString(100),
-                    Email = GenerateRandomString(100),
-                    WorkPhone = GenerateRandomString(100),
-                    Fax = GenerateRandomString(100),
-                    Email2 = GenerateRandomString(100),
-                    Email3 = GenerateRandomString(100),
+                    Middlename = parts[2],
+                    Company = parts[3],
+                    Address = parts[4],
+                    HomePhone = parts[5],
+                    MobilePhone = parts[6],
+                    Email = parts[7],
+                    WorkPhone = parts[8],
+                    Fax = parts[9],
+                    Email2 = parts[10],
+                    Email3 = parts[11]
 
                 });
             }
 
             return contacts;
-
+        
         }
 
 
-       
-        [Test, TestCaseSource("RandomContactDataProvider")]
+    [Test, TestCaseSource("ContactDataFormFile")]
 
         public void ContactCreationTest(ContactData contact)
         {
-            
-           List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
 
@@ -94,6 +83,6 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacts, newContacts);
 
         }
-
     }
-}
+    }
+

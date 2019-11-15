@@ -102,6 +102,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="contacts.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="groups.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
