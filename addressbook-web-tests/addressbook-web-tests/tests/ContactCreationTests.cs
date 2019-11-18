@@ -4,6 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using Excel = Microsoft.Office.Interop.Excel;
 using NUnit.Framework;
 
 
@@ -64,9 +67,22 @@ namespace WebAddressbookTests
             return contacts;
         
         }
+        public static IEnumerable<ContactData> ContactDataFormXmlFile()
+        {
+            return (List<ContactData>)
+             new XmlSerializer(typeof(List<ContactData>))
+             .Deserialize(new StreamReader(@"contacts.xml"));
+
+        }
+
+        public static IEnumerable<ContactData> ContactDataFormJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+               File.ReadAllText(@"contacts.json"));
+        }
 
 
-    [Test, TestCaseSource("ContactDataFormFile")]
+        [Test, TestCaseSource("ContactDataFormXmlFile")]
 
         public void ContactCreationTest(ContactData contact)
         {
