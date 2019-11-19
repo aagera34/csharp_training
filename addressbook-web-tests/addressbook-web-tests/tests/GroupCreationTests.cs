@@ -4,6 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -85,23 +86,42 @@ namespace WebAddressbookTests
 
         }
 
-        [Test, TestCaseSource("GroupDataFormExcelFile")]
+        //[Test, TestCaseSource("GroupDataFormJsonFile")]
 
-    public void GroupCreationTest(GroupData group)
+        [Test]
+
+        public void GroupCreationTest(/*GroupData group*/)
     {
+            List<GroupData> groups = JsonConvert.DeserializeObject<List<GroupData>>(
+               File.ReadAllText(@"groups.json"));
 
-        List<GroupData> oldGroups = app.Groups.GetGroupList();
+        List<GroupData> oldGroups = GroupData.GetAll();
+            var cnt = app.Groups.GetGroupCount();
+            app.Groups.Create(groups[0]);
 
-        app.Groups.Create(group);
+        Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-        List<GroupData> newGroups = app.Groups.GetGroupList();
-        oldGroups.Add(group);
+        List<GroupData> newGroups = GroupData.GetAll();
+        oldGroups.Add(groups[0]);
         oldGroups.Sort();
         newGroups.Sort();
         Assert.AreEqual(oldGroups, newGroups);
     }
 
+        [Test]
 
+        public void TestDBConntctivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+           end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
 
 
 

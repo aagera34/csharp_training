@@ -99,6 +99,23 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacts, newContacts);
 
         }
+
+        [Test]
+
+        public void TestDBConntctivity()
+        {
+            DateTime start = DateTime.Now;
+            List<ContactData> fromUi = app.Contacts.GetContactList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<ContactData> fromDb = ContactData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
+
+
     }
     }
 
