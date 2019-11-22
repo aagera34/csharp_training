@@ -34,73 +34,76 @@ namespace WebAddressbookTests
         [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
-        [Column(Name = "middlename")]
+        //[Column(Name = "middlename")]
         public string Middlename { get; set; }
 
-        [Column(Name = "nickname")]
+        //[Column(Name = "nickname")]
         public string Nickname { get; set; }
 
-        [Column(Name = "title")]
+        //[Column(Name = "title")]
         public string Title { get; set; }
 
-        [Column(Name = "company")]
+        //[Column(Name = "company")]
         public string Company { get; set; }
 
-        [Column(Name = "address")]
+        //[Column(Name = "address")]
         public string Address { get; set; }
 
-        [Column(Name = "home")]
+        //[Column(Name = "home")]
         public string HomePhone { get; set; }
 
-        [Column(Name = "mobile")]
+        //[Column(Name = "mobile")]
         public string MobilePhone { get; set; }
 
-        [Column(Name = "work")]
+        //[Column(Name = "work")]
         public string WorkPhone { get; set; }
 
-        [Column(Name = "fax")]
+        //[Column(Name = "fax")]
         public string Fax { get; set; }
 
-        [Column(Name = "email")]
+        //[Column(Name = "email")]
         public string Email { get; set; }
 
-        [Column(Name = "email2")]
+        //[Column(Name = "email2")]
         public string Email2 { get; set; }
 
-        [Column(Name = "email3")]
+        //[Column(Name = "email3")]
         public string Email3 { get; set; }
 
-        [Column(Name = "homepage")]
+        //[Column(Name = "homepage")]
         public string Homepage { get; set; }
 
-        [Column(Name = "bday")]
+        //[Column(Name = "bday")]
         public string Bday { get; set; }
 
-        [Column(Name = "bmonth")]
+        //[Column(Name = "bmonth")]
         public string Bmonth { get; set; }
 
-        [Column(Name = "byear")]
+        //[Column(Name = "byear")]
         public string Byear { get; set; }
 
-        [Column(Name = "aday")]
+        //[Column(Name = "aday")]
         public string Aday { get; set; }
 
-        [Column(Name = "amonth")]
+        //[Column(Name = "amonth")]
         public string Amonth { get; set; }
 
-        [Column(Name = "ayear")]
+       // [Column(Name = "ayear")]
         public string Ayear { get; set; }
 
-        [Column(Name = "address2")]
+        //[Column(Name = "address2")]
         public string Address2 { get; set; }
 
-        [Column(Name = "phone2")]
+        //[Column(Name = "phone2")]
         public string Phone2 { get; set; }
 
-        [Column(Name = "notes")]
+        //[Column(Name = "notes")]
         public string Notes { get; set; }
 
-        [Column(Name = "id"), PrimaryKey, Identity]
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
+        [Column(Name = "id"), PrimaryKey]
 
         public string Id { get; set; }
 
@@ -265,17 +268,14 @@ namespace WebAddressbookTests
                 return compareResulL;
             }
         }
-   
-
-        
-
+         
 
         public static List<ContactData> GetAll()
         {
             using (AddressBookDB db = new AddressBookDB())
             {
 
-                return (from g in db.Contacts select g).ToList();
+                return (from c in db.Contacts.Where(x=> x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             }//закрывается база данных автоматически
         }
     }

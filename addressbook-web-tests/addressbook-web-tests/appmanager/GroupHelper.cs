@@ -32,13 +32,25 @@ namespace WebAddressbookTests
         }
 
         
-
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
 
             GoToNewGroupsPage();
             SelectGroup(v);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+
+        }
+
+        public GroupHelper Modify(GroupData group, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            GoToNewGroupsPage();
+            SelectGroup(group.Id);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -66,6 +78,17 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
         }
+
+        public void IsModifyGroup()
+        {
+            if (IsElementPresent(By.ClassName("group")))
+            {
+                return;
+            }
+
+            Create(new GroupData("qqq"));
+        }
+
 
 
         public void GoToNewGroupsPage()
