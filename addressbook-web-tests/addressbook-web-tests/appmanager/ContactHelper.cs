@@ -38,6 +38,8 @@ namespace WebAddressbookTests
             return this;
         }
 
+        
+
         public ContactHelper Modify(ContactData newData)
         {
             manager.Navigator.GoToContactPage();
@@ -50,6 +52,17 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToContactPage();
+
+            SelectContact(contact.Id);
+            InitContactModification(contact.Id);
+            FillContactForm(newData);
+            SubmitContactModification();
+            ReturnToContactPage();
+            return this;
+        }
 
 
         public ContactHelper Remove(int v)
@@ -66,6 +79,21 @@ namespace WebAddressbookTests
             return this;
         }
 
+        
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+
+            SelectContact(contact.Id);
+            acceptNextAlert = true;
+            RemoveContact();
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            driver.FindElement(By.CssSelector("div.msgbox"));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
+            ReturnToContactsPage();
+            return this;
+        }
 
 
         public ContactHelper ReturnToContactsPage()
@@ -97,12 +125,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper InitContactModification(String id)
+        {
+            driver.FindElement(By.XPath("//a[@href=\"edit.php?id=" + id + "\"]")).Click();
+            return this;
+        }
+
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
+        public ContactHelper SelectContact(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='" + id + "'])")).Click();
+            return this;
+        }
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -392,6 +431,13 @@ namespace WebAddressbookTests
         driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
 
         return this;
+        }
+
+        public int GetContactCount()
+        {
+            manager.Navigator.GoToContactPage();
+
+            return driver.FindElements(By.TagName("label")).Count;
         }
 
         internal void AddContactToGroup(ContactData contact, GroupData group)

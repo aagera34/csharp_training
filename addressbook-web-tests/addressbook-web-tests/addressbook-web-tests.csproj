@@ -98,6 +98,7 @@
     <Compile Include="tests\ContactDetailsTests.cs" />
     <Compile Include="tests\ContactRemovalTests.cs" />
     <Compile Include="tests\ContactModificationTests.cs" />
+    <Compile Include="tests\ContactTestBase.cs" />
     <Compile Include="tests\GroupModificationTests.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
@@ -126,7 +127,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="groups.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="groups.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

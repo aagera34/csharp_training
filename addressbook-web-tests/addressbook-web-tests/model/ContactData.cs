@@ -103,7 +103,7 @@ namespace WebAddressbookTests
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
 
-        [Column(Name = "id"), PrimaryKey]
+        [Column(Name = "id"), PrimaryKey, Identity]
 
         public string Id { get; set; }
 

@@ -86,15 +86,11 @@ namespace WebAddressbookTests
 
         }
 
-        [Test, TestCaseSource("GroupDataFormJsonFile")]
-
-        //[Test]
+        [Test, TestCaseSource("GroupDataFormExcelFile")]
 
         public void GroupCreationTest(GroupData group)
-    {
-            //List<GroupData> groups = JsonConvert.DeserializeObject<List<GroupData>>(
-            //   File.ReadAllText(@"groups.json"));
-
+        {
+            
         List<GroupData> oldGroups = GroupData.GetAll();
            
             app.Groups.Create(group);
