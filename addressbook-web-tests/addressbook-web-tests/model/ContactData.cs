@@ -106,6 +106,7 @@ namespace WebAddressbookTests
         [Column(Name = "id"), PrimaryKey, Identity]
 
         public string Id { get; set; }
+        
 
         public bool Equals(ContactData other)
         {
