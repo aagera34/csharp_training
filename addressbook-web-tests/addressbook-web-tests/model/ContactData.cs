@@ -225,33 +225,7 @@ namespace WebAddressbookTests
             //return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
         }
 
-        //public string AllDetails
-        //{
-        //    get
-        //    {
-        //        if (allDetails != null)
-        //        {
-        //            return allDetails;
-        //        }
-        //        else
-        //        {
-        //            return (CleanDetailUp(Firstname) + CleanDetailUp(Lastname)).Trim() + (Address + AllEmails + AllPhones).Trim();
-        //        }
-        //    }
-        //    set
-        //    {
-        //        allDetails = value;
-        //    }
-        //}
-
-        //private string CleanDetailUp(string details)
-        //{
-        //    if (details == null || details == "")
-        //    {
-        //        return "";
-        //    }
-        //    return Regex.Replace(details, "[ -()]", "") + "\r\n";
-        //}
+        
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
