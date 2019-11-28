@@ -11,6 +11,7 @@ namespace addressbook_tests_autoit
     public class GroupHelper: HelperBase
     {
         public static string GROUPWINTITLE = "Group editor";
+        public static string CONTACTGROUPSTITLE = "Group list";
         public static string DELETEGROUPWINTITLE = "Delete group";
 
         public GroupHelper(ApplicationManager manager) : base(manager) { }
@@ -28,11 +29,27 @@ namespace addressbook_tests_autoit
                     Name = item
                 });
             }
-            CloseGroupDialogue();
+           
             return list;
         }
 
-        
+        public void EnsureThereIsAtLeastTwoGroup()
+        {
+            List<GroupData> list = new List<GroupData>();
+
+            string count = aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51",
+                "GetItemCount", "#0", "");
+            if (int.Parse(count) <= 1)
+            {
+                GroupData newGroup = new GroupData()
+                {
+                    Name = "test1"
+                };
+
+                Add(newGroup);
+            }
+
+        }
 
         public void Add(GroupData newGroup)
         {
@@ -44,31 +61,29 @@ namespace addressbook_tests_autoit
 
         }
 
-        private void CloseGroupDialogue()
-        {
-            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d54");
-        }
+        
 
-        private void OpenGroupsDialogue()
-        {
-            aux.ControlClick(WINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d512");
-            aux.WinWait(GROUPWINTITLE);
-        }
+       
 
         public void Remove(GroupData toBeRemoved)
         {
-            OpenGroupsDialogue();
-            SelectGroup(toBeRemoved);
-            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
+            EnsureThereIsAtLeastTwoGroup();
+            SelectGroup(toBeRemoved); // выбирем элемент из корня
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51"); // клик на кнопку "удалить"
+            aux.WinWait(DELETEGROUPWINTITLE);
             aux.ControlClick(DELETEGROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
-            aux.ControlClick(DELETEGROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53");
+      
+            aux.ControlClick(DELETEGROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d53"); // клик "ок" удаление
             CloseDeleteGroupsDialogue();
             CloseGroupDialogue();
         }
 
+        
+
         private void SelectGroup(GroupData id)
         {
             string count = aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51", "GetItemCount", "#0", "");
+
             for (int i = 0; i < int.Parse(count); i++)
             {
                 string item = aux.ControlTreeView(GROUPWINTITLE, "", "WindowsForms10.SysTreeView32.app.0.2c908d51",
@@ -84,8 +99,19 @@ namespace addressbook_tests_autoit
 
         private void CloseDeleteGroupsDialogue()
         {
-            aux.ControlClick(DELETEGROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d51");
+            aux.ControlClick(DELETEGROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d54");
 
+        }
+
+        private void CloseGroupDialogue()
+        {
+            aux.ControlClick(GROUPWINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d54");
+        }
+
+        public void OpenGroupsDialogue()
+        {
+            aux.ControlClick(WINTITLE, "", "WindowsForms10.BUTTON.app.0.2c908d512");
+            aux.WinWait(GROUPWINTITLE);
         }
     }
 }

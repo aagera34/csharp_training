@@ -454,7 +454,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             SelectGroupFilter(group.Id);
-            SelectContacts(contact.Id);
+            //SelectContacts(contact.Id);
             CommitRemovingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -480,7 +480,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.Id(contactId)).Click();
 
         }
-        
+
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");

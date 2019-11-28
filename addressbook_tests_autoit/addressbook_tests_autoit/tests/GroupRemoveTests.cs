@@ -14,7 +14,8 @@ namespace addressbook_tests_autoit
 
         public void TestGroupRemove()
         {
-            app.Groups.GetGroupList();
+            app.Groups.OpenGroupsDialogue();
+            app.Groups.EnsureThereIsAtLeastTwoGroup();
             List<GroupData> oldGroups = app.Groups.GetGroupList();
             GroupData toBeRemoved = oldGroups[1];
 
@@ -29,7 +30,6 @@ namespace addressbook_tests_autoit
 
 
             Assert.AreEqual(oldGroups, newGroups);
-
 
         }
     }
