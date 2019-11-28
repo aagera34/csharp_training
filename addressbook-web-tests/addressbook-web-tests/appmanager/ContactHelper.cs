@@ -119,9 +119,7 @@ namespace WebAddressbookTests
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
 
-            //driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
-
-            return this;
+                      return this;
         }
 
         public ContactHelper InitContactModification(String id)
@@ -141,6 +139,24 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='" + id + "'])")).Click();
             return this;
         }
+        private bool IsHasContacts()
+        {
+            return HasElementsWithProperty(By.Name("selected[]"));
+        }
+
+        public ContactHelper EnsureThereIsAtLeastOneContact()
+        {
+            if (!IsHasContacts())
+            {
+                ContactData contact = new ContactData("ggg", "sss");
+                contact.Lastname = "bbb";
+
+                Create(contact);
+            }
+            return this;
+        }
+
+
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -289,7 +305,7 @@ namespace WebAddressbookTests
                 foreach (IWebElement element in elements)
                 {
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                    //ContactData contact = new ContactData(cells[1].Text, cells[2].Text);
+                    
                     contactCache.Add(new ContactData(cells[1].Text, cells[2].Text));
                 }
             }
@@ -364,9 +380,6 @@ namespace WebAddressbookTests
             string text = driver.FindElement(By.CssSelector("div#content")).Text;
 
             return text;
-            //return text.Replace(" ","").Replace("-","").Replace("\r", "").Replace("\n","")
-            //    .Replace("M:","").Replace("H:","").Replace("W:","").Replace("F:", "").Replace("Homepage:", "").Replace("P:", "");
-
         }
 
         public string GetContactInformatoinFormEditForm1(int index)
@@ -420,14 +433,54 @@ namespace WebAddressbookTests
 
             return (string) mpg.AllDetailsForm;
         }
+        //public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+        //{
+        //    //manager.Navigator.GoToHomePage();
+        //    //SelectGroupFilter(group.Id);
 
+        //    bool selectedGroupHasElement = false;
+
+        //    List<ContactData> contactsInGroup = group.GetContacts();
+        //    foreach (ContactData c in contactsInGroup)
+        //    {
+        //        if (c.Equals(contact))
+        //        {
+        //            selectedGroupHasElement = true;
+        //            break;
+        //        }
+        //    }
+
+
+        //    List<string> groupsHasElement = new List<string>();
+
+        //    List<GroupData> allGroups = GroupData.GetAll();
+
+        //    foreach (GroupData g in allGroups)
+        //    {
+        //        if (g.Id == group.Id)
+        //        {
+        //            continue;
+        //        }
+
+        //        contactsInGroup = g.GetContacts();
+        //        foreach (ContactData c in contactsInGroup)
+        //        {
+        //            if (c.Equals(contact))
+        //            {
+        //                groupsHasElement.Add(g.Id);
+        //                break;
+        //            }
+
+        //        }
+        //    };
+
+
+        //    Console.WriteLine(groupsHasElement);
+
+        //}
         public ContactHelper InitContactDetails()
         {
-        //driver.FindElements(By.Name("entry"))[index]
-        //    .FindElements(By.TagName("td"))[6]
-        //    .FindElement(By.TagName("a")).Click();
-
-        driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
+                driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
 
         return this;
         }
@@ -454,7 +507,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             SelectGroupFilter(group.Id);
-            //SelectContacts(contact.Id);
+            SelectContacts(contact.Id);
             CommitRemovingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -464,7 +517,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("add")).Click();
         }
-
+        
         private void SelectGroupToAdd(string name)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
@@ -489,6 +542,51 @@ namespace WebAddressbookTests
         private void CommitRemovingContactToGroup()
         {
             driver.FindElement(By.Name("remove")).Click();
+        }
+        public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupFilter(group.Id);
+
+            bool selectedGroupHasElement = false;
+
+            List<ContactData> contactsInGroup = group.GetContacts();
+            foreach (ContactData c in contactsInGroup)
+            {
+                if (c.Equals(contact))
+                {
+                    selectedGroupHasElement = true;
+                    break;
+                }
+            }
+
+
+            List<string> groupsHasElement = new List<string>();
+
+            List<GroupData> allGroups = GroupData.GetAll();
+
+            foreach (GroupData g in allGroups)
+            {
+                if (g.Id == group.Id)
+                {
+                    continue;
+                }
+
+                contactsInGroup = g.GetContacts();
+                foreach (ContactData c in contactsInGroup)
+                {
+                    if (c.Equals(contact))
+                    {
+                        groupsHasElement.Add(g.Id);
+                        break;
+                    }
+
+                }
+            };
+
+
+            Console.WriteLine(groupsHasElement);
+
         }
     }
 }
