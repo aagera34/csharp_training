@@ -16,10 +16,8 @@ namespace WebAddressbookTests
     public class ContactHelper : HelperBase
     {
         public bool acceptNextAlert { get; private set; }
-        public string Details { get; private set; }
-
         private string baseURL;
-        public object newcontact1;
+       
 
         
         public ContactHelper(ApplicationManager manager) : base(manager)
@@ -112,7 +110,13 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }
-
+        public ContactHelper ViewContactDetailsPage(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+               .FindElements(By.TagName("td"))[6]
+               .FindElement(By.TagName("a")).Click();
+            return this;
+        }
         public ContactHelper InitContactModification(int index)
         {
             driver.FindElements(By.Name("entry"))[index]
@@ -291,6 +295,12 @@ namespace WebAddressbookTests
             Create(new ContactData(newData));
         }
 
+        public ContactHelper InitNewContactCreation()
+        {
+            driver.FindElement(By.Name("firstname")).Click();
+            return this;
+        }
+
         private List<ContactData> contactCache = null;
 
         public List<ContactData> GetContactList()
@@ -302,6 +312,7 @@ namespace WebAddressbookTests
                 manager.Navigator.GoToContactPage();
 
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[Name=entry]"));
+
                 foreach (IWebElement element in elements)
                 {
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
@@ -311,11 +322,25 @@ namespace WebAddressbookTests
             }
             return new List<ContactData>(contactCache);
         }
+        private bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+       
 
         public ContactData GetContactInformatoinFormTable(int index)
         {
             manager.Navigator.GoToContactPage();
-            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
 
             string lastName = cells[1].Text;
             string fistName = cells[2].Text;
@@ -333,6 +358,19 @@ namespace WebAddressbookTests
             };
 
         }
+        public ContactData GetContactInformationFromDetailPage()
+        {
+            manager.Navigator.GoToHomePage();
+
+            ViewContactDetailsPage(0);
+            string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\n", "").Replace("\r", "");
+
+            return new ContactData(contentDetails)
+            {
+                AllInformationFromDetailPage = contentDetails
+                               
+            };
+        }
 
         public ContactData GetContactInformatoinFormEditForm(int index)
         {
@@ -349,7 +387,7 @@ namespace WebAddressbookTests
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
-            
+
 
             return new ContactData(lastName, firstName)
             {
@@ -362,6 +400,53 @@ namespace WebAddressbookTests
                 Email3 = email3
             };
         }
+        public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupFilter(group.Id);
+
+            bool selectGroupHasElement = false;
+            List<ContactData> contactsInGroup = group.GetContacts();
+
+            foreach (ContactData c in contactsInGroup)
+            {
+
+                if (c.Equals(contact))
+                {
+                    selectedGroupHasElement = true;
+                    break;
+                }
+            }
+        
+        List<string> groupsHasElement = new List<string>();
+
+        List<GroupData> allGroups = GroupData.GetAll();
+		foreach(GroupData g in allGroups)
+				{
+                
+			if (g.Id == group.Id)
+
+                {
+                    continue;
+                }
+
+                contactsInGroup = g.GetContacts();
+
+                foreach (ContactData c in contactsInGroup)
+                {
+                    if (c.Equals(contact))
+                    {
+                        groupsHasElement.Add(g.Id);
+                        break;
+                    }
+
+                 }
+            };
+
+            Console.WriteLine(groupsHasElement);
+
+        }
+        
 
         public int GetNumberOfSearchResults()
         {
@@ -372,14 +457,41 @@ namespace WebAddressbookTests
             return Int32.Parse(m.Value);
         }
 
-        public string GetContactInformatoinFormDetail()
+        //public string GetContactInformatoinFormDetail()
+        //{
+        //    manager.Navigator.GoToContactPage();
+        //    InitContactDetails();
+
+        //    string text = driver.FindElement(By.CssSelector("div#content")).Text;
+
+        //    return text;
+        //}
+        public ContactData GetContactInformationFromEditForm(int index)
         {
-            manager.Navigator.GoToContactPage();
-            InitContactDetails();
+            manager.Navigator.GoToHomePage();
+            InitContactModification(0);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
-            string text = driver.FindElement(By.CssSelector("div#content")).Text;
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            return new ContactData(firstName,lastName)
+            {
+                Lastname = lastName,
+                Address = address,
+                HomePhone = homePhone,
+                MobilePhone = mobilePhone,
+                WorkPhone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
 
-            return text;
+            };
         }
 
         public string GetContactInformatoinFormEditForm1(int index)
@@ -433,51 +545,7 @@ namespace WebAddressbookTests
 
             return (string) mpg.AllDetailsForm;
         }
-        //public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
-        //{
-        //    //manager.Navigator.GoToHomePage();
-        //    //SelectGroupFilter(group.Id);
-
-        //    bool selectedGroupHasElement = false;
-
-        //    List<ContactData> contactsInGroup = group.GetContacts();
-        //    foreach (ContactData c in contactsInGroup)
-        //    {
-        //        if (c.Equals(contact))
-        //        {
-        //            selectedGroupHasElement = true;
-        //            break;
-        //        }
-        //    }
-
-
-        //    List<string> groupsHasElement = new List<string>();
-
-        //    List<GroupData> allGroups = GroupData.GetAll();
-
-        //    foreach (GroupData g in allGroups)
-        //    {
-        //        if (g.Id == group.Id)
-        //        {
-        //            continue;
-        //        }
-
-        //        contactsInGroup = g.GetContacts();
-        //        foreach (ContactData c in contactsInGroup)
-        //        {
-        //            if (c.Equals(contact))
-        //            {
-        //                groupsHasElement.Add(g.Id);
-        //                break;
-        //            }
-
-        //        }
-        //    };
-
-
-        //    Console.WriteLine(groupsHasElement);
-
-        //}
+        
         public ContactHelper InitContactDetails()
         {
                 driver.FindElement(By.XPath("//img[@alt='Details']")).Click();
@@ -533,7 +601,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.Id(contactId)).Click();
 
         }
-
+        
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
@@ -543,51 +611,8 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.Name("remove")).Click();
         }
-        public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
-        {
-            manager.Navigator.GoToHomePage();
-            SelectGroupFilter(group.Id);
+        
 
-            bool selectedGroupHasElement = false;
-
-            List<ContactData> contactsInGroup = group.GetContacts();
-            foreach (ContactData c in contactsInGroup)
-            {
-                if (c.Equals(contact))
-                {
-                    selectedGroupHasElement = true;
-                    break;
-                }
-            }
-
-
-            List<string> groupsHasElement = new List<string>();
-
-            List<GroupData> allGroups = GroupData.GetAll();
-
-            foreach (GroupData g in allGroups)
-            {
-                if (g.Id == group.Id)
-                {
-                    continue;
-                }
-
-                contactsInGroup = g.GetContacts();
-                foreach (ContactData c in contactsInGroup)
-                {
-                    if (c.Equals(contact))
-                    {
-                        groupsHasElement.Add(g.Id);
-                        break;
-                    }
-
-                }
-            };
-
-
-            Console.WriteLine(groupsHasElement);
-
-        }
     }
 }
     

@@ -13,7 +13,11 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
-        private string allDetailsForm;
+        private string fullName;
+        private string allInformation;
+        private string allPhonesFromForm;
+        private string contentDetails;
+
 
         public ContactData()
         {
@@ -28,6 +32,11 @@ namespace WebAddressbookTests
             Firstname = firstname;
             Lastname = lastname;
         }
+        public ContactData(string fullName)
+        {
+
+        }
+
         [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
@@ -100,6 +109,8 @@ namespace WebAddressbookTests
         //[Column(Name = "notes")]
         public string Notes { get; set; }
 
+        public string FullName { get; set; }
+
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
 
@@ -125,8 +136,26 @@ namespace WebAddressbookTests
         {
             return (Firstname + Lastname).GetHashCode();
         }
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
 
-       
+            int compareResultL = Lastname.CompareTo(other.Lastname);
+
+            if (compareResultL == 0)
+            {
+                return Firstname.CompareTo(other.Firstname);
+
+            }
+            else
+            {
+                return compareResultL;
+            }
+        }
+
         public override string ToString()
         {
             return ("firstname=" + Firstname + "\nlactname=" + Lastname + "\nmiddlename=" + Middlename + "\ncompany=" + Company + 
@@ -144,7 +173,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
+                    return CleanUpEmail(Email) + CleanUp(Email2) + CleanUp(Email3) + "\r\n".Trim();
                 }
             }
             set
@@ -152,6 +181,75 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
+
+        public string AllInformationFromForm
+        {
+            get
+            {
+                if (allInformation != null)
+                {
+                    return allInformation;
+                }
+                else
+                {
+                    return (FullName + Adress + AllPhonesFromForm + AllEmails).Replace("\n", "").Replace("\r", "").Trim();
+                }
+            }
+            set
+            {
+                allInformation = value;
+            }
+        }
+        public string allDetailsForm;
+
+
+        public string AllDetailsForm
+        {
+            get
+            {
+                if (allDetailsForm != null)
+                {
+                    return AllDetailsForm;
+                }
+                else
+                {
+                    return (Lastname) + (Firstname) + (Address + AllPhones + AllEmails).Trim();
+                }
+            }
+            set
+            {
+                allDetailsForm = value;
+            }
+        }
+        private string CleanDetailFormUp(string detailsForm)
+        {
+            if (detailsForm == null || detailsForm == "")
+            {
+                return "";
+            }
+            return Regex.Replace(detailsForm, "[ -()'\r?\n\r?\n']", "");
+            //	//+ "\r\n";
+        }
+
+        //public string AllEmails
+        //{
+        //    get
+        //    {
+        //        if (allEmails != null)
+        //        {
+        //            return allEmails;
+        //        }
+        //        else
+        //        {
+        //            return (CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3)).Trim();
+        //        }
+        //    }
+        //    set
+        //    {
+        //        allEmails = value;
+        //    }
+        //}
+
 
         private string CleanUpEmail(string email)
         {
@@ -161,7 +259,6 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(email, "[ -()]", "") + "\r\n";
         }
-
         public string AllPhones
         {
             get
@@ -172,7 +269,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work)).Trim();
                 }
             }
             set
@@ -180,15 +277,125 @@ namespace WebAddressbookTests
                 allPhones = value;
             }
         }
-       
+
+        public string AllPhonesFromForm
+        {
+            get
+            {
+                if (allPhonesFromForm != null)
+                {
+                    return allPhonesFromForm;
+                }
+                else
+                {
+                    return (AddPhonesSumbolH(Home) + AddPhoneSumbolM(Mobile) + AddPhoneSumbolW(Work)).Trim();
+                }
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
         private string CleanUp(string phone)
         {
             if (phone == null || phone == "")
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "").Replace("H:", "").Replace("M:", "").Replace("W:", "") + "\r\n";
         }
+
+        private string AddPhoneSumbolH(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "H: " + phone;
+        }
+        private string AddPhoneSumbolM(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "M: " + phone;
+        }
+        private string AddPhoneSumbolW(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return "W: " + phone;
+        }
+        public string AllInformationFromDetailPage
+        {
+            get
+            {
+                if (contentDetails != null)
+                {
+                    return contentDetails;
+                }
+                else
+                {
+                    return (FullName + Adress + AllPhones + AllEmails).Replace("\n", "").Replace("\r", "").Trim();
+                }
+            }
+            set
+            {
+                contentDetails = value;
+            }
+        }
+        public string FullName
+
+        {
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName.Trim();
+                }
+                else
+                {
+                    return (Firstname.Trim() + " " + Lastname.Trim());
+                }
+            }
+            set
+            {
+                fullName = value;
+            }
+        }
+
+        //public string AllPhones
+        //{
+        //    get
+        //    {
+        //        if (allPhones != null)
+        //        {
+        //            return allPhones;
+        //        }
+        //        else
+        //        {
+        //            return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+        //        }
+        //    }
+        //    set
+        //    {
+        //        allPhones = value;
+        //    }
+        //}
+
+
+        //private string CleanUp(string phone)
+        //{
+        //    if (phone == null || phone == "")
+        //    {
+        //        return "";
+        //    }
+        //    return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        //}
 
         public string AllDetailsForm
         {
@@ -212,6 +419,7 @@ namespace WebAddressbookTests
                 allDetailsForm = value;
             }
         }
+
         
         private string CleanDetailFormUp(string detailsform)
         {
@@ -221,11 +429,10 @@ namespace WebAddressbookTests
             }
 
             return detailsform.Replace("-", "");
-            //return detailsform;
-            //return detailsform.Replace(" ", "").Replace("-", "").Replace("\r", "").Replace("\n", "");
+            
         }
-
         
+
         public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))

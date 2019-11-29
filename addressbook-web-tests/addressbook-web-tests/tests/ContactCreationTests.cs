@@ -67,13 +67,13 @@ namespace WebAddressbookTests
             return contacts;
         
         }
-        public static IEnumerable<ContactData> ContactDataFormXmlFile()
-        {
-            return (List<ContactData>)
-             new XmlSerializer(typeof(List<ContactData>))
-             .Deserialize(new StreamReader(@"contacts.xml"));
+        //public static IEnumerable<ContactData> ContactDataFormXmlFile()
+        //{
+        //    return (List<ContactData>)
+        //     new XmlSerializer(typeof(List<ContactData>))
+        //     .Deserialize(new StreamReader(@"contacts.xml"));
 
-        }
+        //}
 
         public static IEnumerable<ContactData> ContactDataFormJsonFile()
         {

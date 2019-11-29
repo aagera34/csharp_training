@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
+
 namespace WebAddressbookTests
 {
     class AddingContactToGroupTests: AuthTestBase
@@ -15,7 +16,15 @@ namespace WebAddressbookTests
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();
-            //actions
+
+            var manager = app.Groups.GetManager();
+            manager.Navigator.GoToGroupsPage();
+            app.Groups.EnsureThereIsAtLeastOneGroup();
+            manager.Navigator.GoToHomePage();
+            app.Contacts.EnsureThereIsAtLeastOneContact();
+            app.Contacts.EnsureThereContactAddTheGroup(contact, group);
+
+
             app.Contacts.AddContactToGroup(contact, group);
 
             List<ContactData> newList = group.GetContacts();

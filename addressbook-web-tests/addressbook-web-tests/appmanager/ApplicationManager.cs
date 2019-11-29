@@ -46,8 +46,7 @@ namespace WebAddressbookTests
                 // Ignore errors if unable to close the browser
             }
         }
-
-
+        
         public static ApplicationManager GetInstance()
         {
             if (! app.IsValueCreated)

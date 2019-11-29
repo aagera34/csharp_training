@@ -31,10 +31,12 @@ namespace WebAddressbookTests
             }
             driver.Navigate().GoToUrl(baseURL + "/addressbook");
         }
+
         public void GoToGroupsPage()
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook");
         }
+
         public void GoToNewGroupsPage()
         {
             if (driver.Url == baseURL + "/addressbook/group.php"
@@ -44,6 +46,15 @@ namespace WebAddressbookTests
             }
             driver.FindElement(By.LinkText("groups")).Click();
         }
+        public void GoToAddNewPage()
+        {
+            if (driver.Url == baseURL + "/addressbook/edit.php"
+                && IsElementPresent(By.Name("submit")))
+            {
+                return;
+            }
+        }
+
         public void GoToContactPage()
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook");

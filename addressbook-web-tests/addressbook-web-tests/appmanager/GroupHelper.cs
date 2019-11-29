@@ -31,7 +31,11 @@ namespace WebAddressbookTests
             return this;
         }
 
-        
+        internal void EnsureThereIsAtLeastOneGroup()
+        {
+            throw new NotImplementedException();
+        }
+
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
@@ -57,6 +61,15 @@ namespace WebAddressbookTests
             ReturnToGroupsPage();
             return this;
 
+        }
+        public void IsModifyGroup()
+        {
+            if (IsElementPresent(By.ClassName("group")))
+            {
+                return;
+            }
+
+            Create(new GroupData("qqq"));
         }
 
         public GroupHelper Remove(int v)
@@ -182,7 +195,22 @@ namespace WebAddressbookTests
 
                     });
                 }
-                return groupCache;
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[i].Name = "";
+                    }
+                    else
+                    {
+                        groupCache[i].Name = parts[i - shift].Trim();
+                    }
+
+                }
+                //return groupCache;
             }
 
             return new List<GroupData>(groupCache);
