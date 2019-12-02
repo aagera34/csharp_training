@@ -18,6 +18,9 @@ namespace mantis_tests
 
         public RegistrationHelper Registration { get; private set; }
         public FtpHelper Ftp { get; set; }
+        public JamesHelper James { get; }
+        public MailHelper Mail { get; }
+
         protected bool acceptNextAlert = true;
 
         
@@ -31,6 +34,8 @@ namespace mantis_tests
          baseURL = "http://localhost:8098";
          Registration = new RegistrationHelper(this);
          Ftp = new FtpHelper(this);
+         James = new JamesHelper(this);
+         Mail = new MailHelper(this);
          
         }
 
