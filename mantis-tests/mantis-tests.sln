@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mantis-tests", "mantis-tests\mantis-tests.csproj", "{9CE4E5BE-ADC6-438B-980D-B757CB0C498D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MantisTestProject", "MantisTestProject\MantisTestProject.csproj", "{46E1A12D-44E3-406F-A3B5-A5FA19FECF7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{9CE4E5BE-ADC6-438B-980D-B757CB0C498D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE4E5BE-ADC6-438B-980D-B757CB0C498D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE4E5BE-ADC6-438B-980D-B757CB0C498D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E1A12D-44E3-406F-A3B5-A5FA19FECF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E1A12D-44E3-406F-A3B5-A5FA19FECF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E1A12D-44E3-406F-A3B5-A5FA19FECF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E1A12D-44E3-406F-A3B5-A5FA19FECF7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

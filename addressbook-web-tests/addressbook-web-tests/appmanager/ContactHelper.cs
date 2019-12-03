@@ -302,6 +302,7 @@ namespace WebAddressbookTests
         }
 
         private List<ContactData> contactCache = null;
+        private bool selectedGroupHasElement;
 
         public List<ContactData> GetContactList()
         {
@@ -363,7 +364,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
 
             ViewContactDetailsPage(0);
-            string contentDetails = driver.FindElement(By.Id("content")).Text.Replace("\n", "").Replace("\r", "");
+            string contentDetails = driver.FindElement(By.Id("content")).Text;
 
             return new ContactData(contentDetails)
             {
@@ -601,12 +602,25 @@ namespace WebAddressbookTests
             driver.FindElement(By.Id(contactId)).Click();
 
         }
-        
+        public bool EnsureThereGroupHasContacts(GroupData group)
+        {
+            ContactData contact = new ContactData();
+            List<ContactData> contacts = contact.GetContactsListWithGroup(group.Id);
+
+            return contacts.Count != 0;
+        }
+        public int AddContactDb(ContactData contact)
+        {
+            return contact.AddContact(contact).GetValueOrDefault();
+        }
+
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
-               
+
+        
+
         private void CommitRemovingContactToGroup()
         {
             driver.FindElement(By.Name("remove")).Click();

@@ -12,13 +12,35 @@ namespace WebAddressbookTests
         [Test]
         public void TestRemovingContactFromGroup()
         {
-            
+            bool appHasGroups = app.Groups.EnsureThereHasGroup();
+            if (!appHasGroups)
+            {
+                GroupData newGroup = new GroupData("NewGroup");
+                newGroup.Header = "NewGroupHeader";
+                newGroup.Footer = "NewGroupFooter";
+
+                app.Groups.AddGroupToDb(newGroup);
+            }
+
             GroupData group = GroupData.GetAll()[0];
+
+            bool groupHasContacts = app.Contacts.EnsureThereGroupHasContacts(group);
+
+            if (!groupHasContacts)
+            {
+                ContactData newContact = new ContactData("aaa");
+                newContact.Lastname = "bbb";
+
+                int newContactId = app.Contacts.AddContactDb(newContact);
+
+                app.Groups.AddContactToGroupDb(newContactId, int.Parse(group.Id));
+            }
+
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = group.GetContacts().First();
 
-            app.Contacts.RemoveContactFromGroup(contact, group);
 
+            app.Contacts.RemoveContactFromGroup(contact, group);
 
             List<ContactData> newList = group.GetContacts();
             oldList.Remove(contact);

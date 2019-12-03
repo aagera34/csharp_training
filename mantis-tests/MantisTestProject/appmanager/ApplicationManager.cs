@@ -9,18 +9,14 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using static System.Net.WebRequestMethods;
 
-namespace mantis_tests
+namespace MantisTestProject
 {
     public class ApplicationManager
     {
         protected IWebDriver driver;
         protected string baseURL;
 
-        public RegistrationHelper Registration { get; private set; }
-        public FtpHelper Ftp { get; set; }
-        public JamesHelper James { get; }
-        public MailHelper Mail { get; }
-       
+        
 
         protected bool acceptNextAlert = true;
 
@@ -28,17 +24,12 @@ namespace mantis_tests
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        
-
         private ApplicationManager()
         {
          driver = new FirefoxDriver();
          driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
          baseURL = "http://localhost:8098";
-         Registration = new RegistrationHelper(this);
-         Ftp = new FtpHelper(this);
-         James = new JamesHelper(this);
-         Mail = new MailHelper(this);
+         
          
         }
 
@@ -65,9 +56,8 @@ namespace mantis_tests
             }
             return app.Value;
         }
-
-        
-        
+   
+   
 
         public IWebDriver Driver
         {

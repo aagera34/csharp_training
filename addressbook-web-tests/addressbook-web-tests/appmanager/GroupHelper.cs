@@ -31,10 +31,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal void EnsureThereIsAtLeastOneGroup()
-        {
-            throw new NotImplementedException();
-        }
 
         public GroupHelper Modify(int v, GroupData newData)
         {
@@ -92,14 +88,14 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public void IsModifyGroup()
-        {
-            if (IsElementPresent(By.ClassName("group")))
-            {
-                return;
-            }
 
-            Create(new GroupData("qqq"));
+        public bool EnsureThereHasGroup()
+
+        {
+
+            List<GroupData> groups = GroupData.GetAll();
+
+            return groups.Count != 0;
         }
 
 
@@ -151,7 +147,7 @@ namespace WebAddressbookTests
         public GroupHelper SelectGroup(String id)
         {
 
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
 
@@ -161,7 +157,31 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
+        public void Type(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Click();
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
 
+        }
+        public bool IsHasGroups()
+        {
+            return HasElementsWithProperty(By.ClassName("group"));
+        }
+        public GroupHelper EnsureThereIsAtLeastOneGroup()
+        {
+            if (!IsHasGroups())
+            {
+                GroupData group = new GroupData("1rh3");
+                group.Header = "1sf23";
+                group.Footer = "12sf4";
+                Create(group);
+            }
+            return this;
+        }
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -175,7 +195,7 @@ namespace WebAddressbookTests
                 return;
             }
             Create(new GroupData("group"));
-           
+
         }
 
         private List<GroupData> groupCache = null;
@@ -222,10 +242,49 @@ namespace WebAddressbookTests
             GoToNewGroupsPage();
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
-       
+        public int AddGroupToDb(GroupData group)
+        {
+            return group.AddGroup(group).GetValueOrDefault();
+        }
+
+        public int GetFreeGroup(ContactData contact)
+        {
+            List<GroupData> allGroups = GroupData.GetAll();
+
+            foreach (GroupData g in allGroups)
+            {
+                bool groupHasElement = false;
+
+                List<ContactData> contactsInGroup = g.GetContacts();
+                foreach (ContactData c in contactsInGroup)
+                {
+                    if (c.Equals(contact))
+                    {
+                        groupHasElement = true;
+                        break;
+                    }
+                }
+
+                if (!groupHasElement)
+                {
+                    return int.Parse(g.Id);
+                }
+
+            };
+
+            return -1;
+        }
+
+        public int AddContactToGroupDb(int contactId, int groupId)
+        {
+            GroupContactRelation gcr = new GroupContactRelation();
+            return gcr.AddNewRelation(contactId, groupId);
+        }
+        public int AddGroupToDb(GroupData group)
+        {
+            return group.AddGroup(group).GetValueOrDefault();
+        }
     }
-
-
 }
        
     

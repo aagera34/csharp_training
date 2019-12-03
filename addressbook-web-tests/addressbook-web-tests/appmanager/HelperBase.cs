@@ -22,10 +22,17 @@ namespace WebAddressbookTests
             this.driver = manager.Driver;
 
         }
+
+        public ApplicationManager GetManager()
+        {
+            return this.manager;
+        }
+
         public void Type(By locator, string text)
         {
             if (text != null)
             {
+                driver.FindElement(locator).Click();
                 driver.FindElement(locator).Clear();
                 driver.FindElement(locator).SendKeys(text);
             }
