@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 namespace WebAddressbookTests
 {
     [Table(Name = "addressbook")]
+
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;

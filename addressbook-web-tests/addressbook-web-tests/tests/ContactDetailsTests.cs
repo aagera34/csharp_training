@@ -12,6 +12,7 @@ namespace WebAddressbookTests
 
     {
         [Test]
+
         public void ContactDetailsTest()
         {
 

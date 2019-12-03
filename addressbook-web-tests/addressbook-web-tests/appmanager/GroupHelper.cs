@@ -97,9 +97,7 @@ namespace WebAddressbookTests
 
             return groups.Count != 0;
         }
-
-
-
+        
         public void GoToNewGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();
@@ -125,11 +123,13 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
+
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
         }
+
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
@@ -157,6 +157,7 @@ namespace WebAddressbookTests
             groupCache = null;
             return this;
         }
+
         public void Type(By locator, string text)
         {
             if (text != null)
@@ -167,10 +168,12 @@ namespace WebAddressbookTests
             }
 
         }
+
         public bool IsHasGroups()
         {
             return HasElementsWithProperty(By.ClassName("group"));
         }
+
         public GroupHelper EnsureThereIsAtLeastOneGroup()
         {
             if (!IsHasGroups())
@@ -182,6 +185,7 @@ namespace WebAddressbookTests
             }
             return this;
         }
+
         public GroupHelper InitGroupModification()
         {
             driver.FindElement(By.Name("edit")).Click();
@@ -242,11 +246,12 @@ namespace WebAddressbookTests
             GoToNewGroupsPage();
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+
         public int AddGroupToDb(GroupData group)
         {
             return group.AddGroup(group).GetValueOrDefault();
         }
-
+        
         public int GetFreeGroup(ContactData contact)
         {
             List<GroupData> allGroups = GroupData.GetAll();
@@ -280,10 +285,7 @@ namespace WebAddressbookTests
             GroupContactRelation gcr = new GroupContactRelation();
             return gcr.AddNewRelation(contactId, groupId);
         }
-        public int AddGroupToDb(GroupData group)
-        {
-            return group.AddGroup(group).GetValueOrDefault();
-        }
+        
     }
 }
        
