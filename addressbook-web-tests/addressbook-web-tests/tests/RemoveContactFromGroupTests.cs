@@ -36,6 +36,7 @@ namespace WebAddressbookTests
                 app.Groups.AddContactToGroupDb(newContactId, int.Parse(group.Id));
             }
 
+
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = group.GetContacts().First();
 
