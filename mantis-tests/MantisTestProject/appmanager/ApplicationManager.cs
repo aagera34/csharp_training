@@ -15,12 +15,7 @@ namespace MantisTestProject
     {
         protected IWebDriver driver;
         protected string baseURL;
-
-        
-
-        protected bool acceptNextAlert = true;
-
-        
+               
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -29,8 +24,8 @@ namespace MantisTestProject
          driver = new FirefoxDriver();
          driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
          baseURL = "http://localhost:8098";
-         
-         
+         Registration = new RegistrationHelper(this);
+
         }
 
         ~ApplicationManager()
@@ -67,6 +62,6 @@ namespace MantisTestProject
             }
          }
 
-      
+        public RegistrationHelper Registration { get; set; }
     }
 }

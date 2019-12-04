@@ -27,8 +27,10 @@ namespace mantis_tests
         
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+        protected LoginHelper loginHelper;
+        protected ProjectManagementHelper projectHelper;
+        protected ManagementMenuHelper menuHelper;
 
-        
 
         private ApplicationManager()
         {
@@ -66,8 +68,7 @@ namespace mantis_tests
             return app.Value;
         }
 
-        
-        
+             
 
         public IWebDriver Driver
         {
@@ -77,6 +78,6 @@ namespace mantis_tests
             }
          }
 
-      
+        public object MenuHelper { get; internal set; }
     }
 }
