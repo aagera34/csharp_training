@@ -2,24 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
-namespace MantisTestProject
+namespace mantis_init_remove_project
 {
     public class HelperBase
     {
         protected IWebDriver driver;
         protected ApplicationManager manager;
 
-
         public HelperBase(ApplicationManager manager)
         {
             this.manager = manager;
-            this.driver = manager.Driver;
-
+            driver = manager.Driver;
         }
 
         public void Type(By locator, string text)

@@ -65,9 +65,7 @@
   <ItemGroup>
     <Compile Include="appmanager\ApplicationManager.cs" />
     <Compile Include="appmanager\HelperBase.cs" />
-    <Compile Include="appmanager\RegistrationHelper.cs" />
-    <Compile Include="model\AccountData.cs" />
-    <Compile Include="tests\CreateProject.cs" />
+    <Compile Include="tests\InitProject.cs" />
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

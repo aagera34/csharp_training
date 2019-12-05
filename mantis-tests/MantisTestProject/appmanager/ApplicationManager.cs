@@ -2,29 +2,31 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-using static System.Net.WebRequestMethods;
 
-namespace MantisTestProject
+namespace mantis_init_remove_project
 {
     public class ApplicationManager
     {
         protected IWebDriver driver;
         protected string baseURL;
-               
+
+
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
+
         private ApplicationManager()
         {
-         driver = new FirefoxDriver();
-         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1);
-         baseURL = "http://localhost:8098";
-         Registration = new RegistrationHelper(this);
+            driver = new FirefoxDriver();
+            
+            baseURL = "http://localhost:8098";
+            //"http://localhost/mantisbt-1.2.17/login_page.php"
+            Registration = new RegistrationHelper(this);
 
         }
 
@@ -39,20 +41,17 @@ namespace MantisTestProject
                 // Ignore errors if unable to close the browser
             }
         }
-        
+
         public static ApplicationManager GetInstance()
         {
-            if (! app.IsValueCreated)
+            if (!app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
                 newInstance.driver.Url = "http://localhost:8098/mantisbt-2.22.1/login_page.php";
                 app.Value = newInstance;
-                
             }
             return app.Value;
         }
-   
-   
 
         public IWebDriver Driver
         {
@@ -60,8 +59,9 @@ namespace MantisTestProject
             {
                 return driver;
             }
-         }
+        }
 
         public RegistrationHelper Registration { get; set; }
+
     }
 }
