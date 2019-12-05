@@ -22,6 +22,7 @@ namespace WebAddressbookTests
                 app.Groups.AddGroupToDb(newGroup);
             }
 
+
             GroupData group = GroupData.GetAll()[0];
 
             bool groupHasContacts = app.Contacts.EnsureThereGroupHasContacts(group);
@@ -29,7 +30,7 @@ namespace WebAddressbookTests
             if (!groupHasContacts)
             {
                 ContactData newContact = new ContactData("aaa");
-                newContact.Lastname = "bbb";
+                newContact.Lastname = "bss";
 
                 int newContactId = app.Contacts.AddContactDb(newContact);
 

@@ -13,21 +13,37 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddingContactToGroup()
         {
-            GroupData group = GroupData.GetAll()[0];
-            List<ContactData> oldList = group.GetContacts();
-            ContactData contact = ContactData.GetAll().Except(oldList).First();
-
             var manager = app.Groups.GetManager();
             manager.Navigator.GoToGroupsPage();
             app.Groups.EnsureThereIsAtLeastOneGroup();
             manager.Navigator.GoToHomePage();
             app.Contacts.EnsureThereIsAtLeastOneContact();
-            app.Contacts.EnsureThereContactAddTheGroup(contact, group);
 
-            app.Contacts.AddContactToGroup(contact, group);
+            GroupData group = GroupData.GetAll()[0];
+            List<ContactData> oldList = group.GetContacts();
+            ContactData contact = ContactData.GetAll().Except(oldList).First();
+
+            bool canAddToGroup = app.Contacts.EnsureThereContactAddTheGroup(contact, group);
 
 
+            if (canAddToGroup)
+            {
+                app.Contacts.AddContactToGroup(contact, group);
+
+            }
+            else
+            {
+                contact.Firstname = "a1aa";
+                contact.Lastname = "bb1b";
+                app.Contacts.Create(contact);
+
+                app.Contacts.AddContactToGroup(contact, group);
+
+            }
+
+            System.Threading.Thread.Sleep(100);
             List<ContactData> newList = group.GetContacts();
+
             oldList.Add(contact);
             newList.Sort();
             oldList.Sort();

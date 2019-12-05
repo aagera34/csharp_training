@@ -401,55 +401,77 @@ namespace WebAddressbookTests
                 Email3 = email3
             };
         }
-        public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+
+        public bool EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
         {
-            manager.Navigator.GoToHomePage();
-            SelectGroupFilter(group.Id);
+            bool canAddToGroup = true;
 
-            bool selectGroupHasElement = false;
             List<ContactData> contactsInGroup = group.GetContacts();
-
             foreach (ContactData c in contactsInGroup)
             {
-
                 if (c.Equals(contact))
                 {
-                    selectedGroupHasElement = true;
+                    canAddToGroup = false;
                     break;
                 }
             }
-        
-        List<string> groupsHasElement = new List<string>();
 
-        List<GroupData> allGroups = GroupData.GetAll();
-		foreach(GroupData g in allGroups)
-				{
-                
-			if (g.Id == group.Id)
-
-                {
-                    continue;
-                }
-
-                contactsInGroup = g.GetContacts();
-
-                foreach (ContactData c in contactsInGroup)
-                {
-                    if (c.Equals(contact))
-                    {
-                        groupsHasElement.Add(g.Id);
-                        break;
-                    }
-
-                 }
-            };
-
-            Console.WriteLine(groupsHasElement);
+            return canAddToGroup;
 
         }
-        
 
-        public int GetNumberOfSearchResults()
+
+  //      public void EnsureThereContactAddTheGroup(ContactData contact, GroupData group)
+  //      {
+  //          manager.Navigator.GoToHomePage();
+  //          SelectGroupFilter(group.Id);
+
+  //          bool selectGroupHasElement = false;
+
+  //          List<ContactData> contactsInGroup = group.GetContacts();
+
+  //          foreach (ContactData c in contactsInGroup)
+  //          {
+
+  //              if (c.Equals(contact))
+  //              {
+  //                  selectedGroupHasElement = true;
+  //                  break;
+  //              }
+  //          }
+        
+  //      List<string> groupsHasElement = new List<string>();
+
+  //      List<GroupData> allGroups = GroupData.GetAll();
+		//foreach(GroupData g in allGroups)
+		//		{
+                
+		//	if (g.Id == group.Id)
+
+  //              {
+  //                  continue;
+  //              }
+
+  //              contactsInGroup = g.GetContacts();
+
+  //              foreach (ContactData c in contactsInGroup)
+  //              {
+  //                  if (c.Equals(contact))
+  //                  {
+  //                      groupsHasElement.Add(g.Id);
+  //                      break;
+  //                  }
+
+  //               }
+  //          };
+
+  //          Console.WriteLine(groupsHasElement);
+
+  //      }
+
+       
+
+            public int GetNumberOfSearchResults()
         {
             manager.Navigator.GoToContactPage();
             string text = driver.FindElement(By.TagName("label")).Text;
@@ -458,15 +480,7 @@ namespace WebAddressbookTests
             return Int32.Parse(m.Value);
         }
 
-        //public string GetContactInformatoinFormDetail()
-        //{
-        //    manager.Navigator.GoToContactPage();
-        //    InitContactDetails();
-
-        //    string text = driver.FindElement(By.CssSelector("div#content")).Text;
-
-        //    return text;
-        //}
+        
         public ContactData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
