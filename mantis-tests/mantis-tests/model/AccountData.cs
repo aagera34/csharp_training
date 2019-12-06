@@ -3,19 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace mantis_tests
 {
     public class AccountData
     {
-        public string Name { get; set; }
+        private string name;
+        private string password;
 
-        public string Password { get; set; }
+        public AccountData()
+        {
+        }
+
+        public AccountData(string name, string password)
+        {
+            this.name = name;
+            this.password = password;
+        }
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
+
+        public string Password
+        {
+            get
+            {
+                return password;
+            }
+            set
+            {
+                password = value;
+            }
+        }
 
         public string Email { get; set; }
+        public string Id { get; internal set; }
     }
 }

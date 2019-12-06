@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using LinqToDB;
 
-
 namespace mantis_tests
 {
     public class MantisDB : LinqToDB.Data.DataConnection

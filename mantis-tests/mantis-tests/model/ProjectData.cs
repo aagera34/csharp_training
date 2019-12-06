@@ -10,7 +10,6 @@ using LinqToDB;
 namespace mantis_tests
 {
     [Table(Name = "mantis_project_table")]
-
     public class ProjectData : IEquatable<ProjectData>, IComparable<ProjectData>
     {
         public ProjectData()
@@ -19,6 +18,12 @@ namespace mantis_tests
         public ProjectData(string name)
         {
             Name = name;
+        }
+
+        public ProjectData(string name, string description)
+        {
+            Name = name;
+            Description = description;
         }
 
         public bool Equals(ProjectData other)
